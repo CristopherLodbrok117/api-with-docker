@@ -127,22 +127,104 @@ ENTRYPOINT ["java","-jar","app-videogames.jar"]
 
 <br>
 
-2. 
-
-![]()
-
-2. 
-
-![]()
-
-2. 
-
-![]()
-
-2. 
-
-![]()
+5. Now we are ready to build our image. Run this command in the terminal, you can define your image name/id replacing the parenthesis text: `docker build -t "app-videogames-image" .`
 
 
-## File.jar
+![app image build](https://github.com/CristopherLodbrok117/api-with-docker/blob/ff8319006744467cf270e728306f4b46312ec379/assets/screenshots/13%20-%20build%20docker%20image.png)
+
+6. Run `docker images` or go to docker desktop to see both images
+
+![current images](https://github.com/CristopherLodbrok117/api-with-docker/blob/ff8319006744467cf270e728306f4b46312ec379/assets/screenshots/13%20-%20current%20images.png)
+
+<br>
+
+## Docker Compose
+
+The next step is to configure the docker-compose.yml file. Docker Compose is a tool for defining and running multi-container applications. Compose simplifies the control of our entire application, making it easy to manage services, networks, and volumes in a single, comprehensible YAML configuration file. You can consult [Docker Compose documentation](https://docs.docker.com/compose/) for more information
+
+1. Create a file called docker-compose.yml in the project directory 
+
+```python
+# The last version doesn't require to write it in the top
+
+services:
+
+  docker-api:
+    image: app-videogames-image
+    container_name: app-videogames-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      mysql_service:
+        condition: service_healthy
+    ports:
+      - "8081:8081"
+    networks:
+      - spring-network
+    environment:
+      DATABASE_URL: jdbc:mysql://mysql_database:3306/docker_db?createDatabaseIfNotExists=true&serverTimezone=UTC
+      DATABASE_USER: root
+      DATABASE_PASSWORD: 1234
+
+  mysql_service:
+    image: mysql:latest
+    container_name: mysql_database
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: docker_db
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 12345
+    ports:
+      - "3307:3306"
+    networks:
+      - spring-network
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      retries: 10
+
+networks:
+  spring-network:
+    driver: bridge
+```
+
+We are defining two services `docker-api` and `mysql-service`
+
+For `docker-api` service
+- Use the app image, and define the container name/id with `app-videogames-container`
+- We tell in the context path where the Dockerfile is (root)
+- We bind the host port to the container port `8081` to `8081`
+- We configure a network `spring-network` with the default driver (bridge). Basic but good enough to enable containers communication. And specify it in every service
+- In the environment we define environment variables (here you add those ones we used in the application.properties)
+- With `depends_on` we tell Docker that this service will start only when mysql-service is running and is healthy (a healthy service is tested automatically)
+
+For `mysql-service` 
+- Use the image we downloaded
+- Add the container's name
+- The root and database environment variables are required (user and password are optional)
+- Add the network
+- `Healthcheck` allows Docker to monitorize the status of a service, by defining a test to find out if the service is healthy along the whole execution. It runs every 10 seconds (if it fails the test 10 straight times the service is tagged as unhealthy). It uses `mysqladmin` to connect to `MySQL server`, if the server responds means that it's alive
+
+<br>
+
+## Containers up
+
+Now we can build our containers
+
+1. In the terminal run `docker compose up`
+
+![docker compose up]()
+
+1. In the terminal run `docker compose up`
+
+![docker compose up]()
+
+1. In the terminal run `docker compose up`
+
+![docker compose up]()
+
+1. In the terminal run `docker compose up`
+
+![docker compose up]()
 
