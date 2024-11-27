@@ -214,17 +214,34 @@ Now we can build our containers
 
 1. In the terminal run `docker compose up`
 
-![docker compose up]()
+![docker compose up](https://github.com/CristopherLodbrok117/api-with-docker/blob/162020656da61ba22feed23ee35506e8be528975/assets/screenshots/14%20-%20docker%20compose%20up%201.png)
 
-1. In the terminal run `docker compose up`
+Once they're running you will see all the application logs. You can stop them with `ctrl + c`
 
-![docker compose up]()
+![services up](https://github.com/CristopherLodbrok117/api-with-docker/blob/162020656da61ba22feed23ee35506e8be528975/assets/screenshots/14%20-%20docker%20compose%20up%202.png)
 
-1. In the terminal run `docker compose up`
+<br>
 
-![docker compose up]()
+## Requests
 
-1. In the terminal run `docker compose up`
+AMAZING! you've dockerized your application succesfully. Now let's test it using [Insomnia](https://insomnia.rest/) to customize some requests
 
-![docker compose up]()
+1. List videogames
 
+![list all](https://github.com/CristopherLodbrok117/api-with-docker/blob/162020656da61ba22feed23ee35506e8be528975/assets/screenshots/20%20-%20request%20get%20list.png)
+
+3. Find by id
+
+![find by id](https://github.com/CristopherLodbrok117/api-with-docker/blob/162020656da61ba22feed23ee35506e8be528975/assets/screenshots/21-%20request%20find%20by%20id.png)
+
+4. Find by name pattern
+
+![find by pattern](https://github.com/CristopherLodbrok117/api-with-docker/blob/162020656da61ba22feed23ee35506e8be528975/assets/screenshots/22%20-%20find%20by%20name%20pattern.png)
+
+5. Save new
+
+![save videogame](https://github.com/CristopherLodbrok117/api-with-docker/blob/162020656da61ba22feed23ee35506e8be528975/assets/screenshots/23%20-%20save%20new%20video%20game.png)
+
+7.  Go to Docker Desktop > containers. Click in your services and you'll see the requests logs
+
+![docker services logs](https://github.com/CristopherLodbrok117/api-with-docker/blob/162020656da61ba22feed23ee35506e8be528975/assets/screenshots/15%20-%20docker%20container%20logs.png)
