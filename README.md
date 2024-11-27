@@ -89,7 +89,7 @@ This will require a few more steps. Please, follow the same order to avoid some 
 
 ![java 17](https://github.com/CristopherLodbrok117/api-with-docker/blob/5326087cdc396eed731c2c3a2190d21767695ad1/assets/screenshots/09%20-%20eclipse%20for%20java%2017.png)
 
-4. Create a file without extension named "Dockerfile". Please write the next lines
+4. Create a file without extension named "Dockerfile". Please write the next lines (# means comment line)
 
 <br>
 
@@ -100,31 +100,28 @@ FROM eclipse-temurin:17.0.13_11-jdk
 # This tells docker that /root is the work directory
 WORKDIR /root
 
-ARG JAR_FILE=target/docker-api-0.0.1-SNAPSHOT.jar
-# Copy changing the the name
-#COPY ${JAR_FILE} app-videogames.jar
-COPY target/docker-api-0.0.1-SNAPSHOT.jar app-videogames.jar
-
-# INFORMAR EL PUERTO DONDE SE EJECUTA EL CONTENEDOR (INFORMATIVO)
+# Inform docker that this container listens for traffic on the specified port 8081
 EXPOSE 8081
 
-# COPIAR Y PEGAR ARCHIVOS DENTRO DEL CONTENEDOR
+# Copy the jar file from our PC to the container (and rename it)
+COPY target/docker-api-0.0.1-SNAPSHOT.jar app-videogames.jar
+
+# Copy our pom.xml and maven to docker (spring boot includes an embedded maven)
 COPY ./pom.xml /root
 COPY ./.mvn /root/.mvn
 COPY ./mvnw /root
 
-# DESCARGAR LAS DEPENDENCIAS
+# docker will use the maven we copied to download dependencies
 RUN ./mvnw dependency:go-offline
 
-# COPIAR EL CODIGO FUENTE DENTRO DEL CONTENEDOR
+# copy our project code
 COPY ./src /root/src
 
-# CONSTRUIR NUESTRA APLICACION
+# Remember that formerly we did this manually? well, docker will make it for you with this line
 RUN ./mvnw clean install -DskipTests
 
-# LEVANTAR NUESTRA APLICACION CUANDO EL CONTENEDOR INICIE
+# Start the application once the container is up
 ENTRYPOINT ["java","-jar","app-videogames.jar"]
-#ENTRYPOINT ["java","-jar","/root/target/SpringDocker-0.0.1-SNAPSHOT.jar"]
 
 ```
 
