@@ -11,7 +11,7 @@ The first step is to google or go to the next [link]( https://www.docker.com/pro
 
 ![docker download](https://github.com/CristopherLodbrok117/api-with-docker/blob/edb65480f97fc0c16efa9acbb886ccad030150b9/assets/screenshots/00%20-%20install%20docker.png)
 
-Open Docker desktop and explore its different elements. Here wou will see all the images, containers, networks and volumes you create.
+Open Docker desktop and explore its different elements. Here wou will see all the images, containers, networks and volumes you created.
 
 ![docker desktop](https://github.com/CristopherLodbrok117/api-with-docker/blob/edb65480f97fc0c16efa9acbb886ccad030150b9/assets/screenshots/01%20-%20docker%20desktop.png)
 
